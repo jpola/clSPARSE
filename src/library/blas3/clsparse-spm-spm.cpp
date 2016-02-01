@@ -182,7 +182,7 @@ clsparseStatus compute_nnzC_Ct_2heap_noncoalesced_local(int num_threads, int num
 
     KernelWrap kWrapper(kernel);
     kWrapper << queue_one << csrRowPtrA << csrColIndA << csrValA << csrRowPtrB << csrColIndB << csrValB << csrRowPtrC 
-             << csrRowPtrCt << csrColIndCt << csrValCt << cl::__local(j*num_threads * sizeof(int) ) << cl::__local(j*num_threads * sizeof(float)) << counter << position;
+             << csrRowPtrCt << csrColIndCt << csrValCt << cl::Local(j*num_threads * sizeof(int) ) << cl::Local(j*num_threads * sizeof(float)) << counter << position;
     
     cl::NDRange local(szLocalWorkSize[0]);
     cl::NDRange global(szGlobalWorkSize[0]);
@@ -219,7 +219,7 @@ clsparseStatus compute_nnzC_Ct_bitonic_scan(int num_threads, int num_blocks, int
 
     KernelWrap kWrapper(kernel);
     kWrapper << queue_one << csrRowPtrA << csrColIndA << csrValA << csrRowPtrB << csrColIndB << csrValB << csrRowPtrC << csrRowPtrCt
-                          << csrColIndCt << csrValCt << cl::__local(buffer_size * sizeof(int)) << cl::__local(buffer_size * sizeof(float)) << cl::__local((buffer_size+1) * sizeof(short)) << position << _n;
+                          << csrColIndCt << csrValCt << cl::Local(buffer_size * sizeof(int)) << cl::Local(buffer_size * sizeof(float)) << cl::Local((buffer_size+1) * sizeof(short)) << position << _n;
     
     cl::NDRange local(szLocalWorkSize[0]);
     cl::NDRange global(szGlobalWorkSize[0]);
@@ -261,7 +261,7 @@ clsparseStatus compute_nnzC_Ct_mergepath(int num_threads, int num_blocks, int j,
     {
        KernelWrap kWrapper1(kernel1);
        kWrapper1 << queue_one << csrRowPtrA << csrColIndA << csrValA << csrRowPtrB << csrColIndB <<  csrValB << csrRowPtrC 
-                << csrRowPtrCt <<  *csrColIndCt <<  *csrValCt << cl::__local((mergebuffer_size) * sizeof(int)) << cl::__local((mergebuffer_size) * sizeof(float)) <<  cl::__local((num_threads+1) * sizeof(short)) <<  position << mergebuffer_size << cl::__local(sizeof(cl_int)   * (num_threads + 1)) << cl::__local(sizeof(cl_int)   * (num_threads + 1));
+                << csrRowPtrCt <<  *csrColIndCt <<  *csrValCt << cl::Local((mergebuffer_size) * sizeof(int)) << cl::Local((mergebuffer_size) * sizeof(float)) <<  cl::Local((num_threads+1) * sizeof(short)) <<  position << mergebuffer_size << cl::Local(sizeof(cl_int)   * (num_threads + 1)) << cl::Local(sizeof(cl_int)   * (num_threads + 1));
 
                            
     status = kWrapper1.run(control, global, local);
@@ -278,7 +278,7 @@ clsparseStatus compute_nnzC_Ct_mergepath(int num_threads, int num_blocks, int j,
     
        KernelWrap kWrapper2(kernel2);
        kWrapper2 << queue_one << csrRowPtrA << csrColIndA << csrValA << csrRowPtrB << csrColIndB << csrValB << csrRowPtrC
-                          << csrRowPtrCt << *csrColIndCt <<  *csrValCt << cl::__local((mergebuffer_size_local) * sizeof(int)) << cl::__local((mergebuffer_size_local) * sizeof(float)) << cl::__local(( num_threads+1) * sizeof(short)) << position << mergebuffer_size_local << cl::__local(sizeof(cl_int)   * (num_threads + 1)) << cl::__local(sizeof(cl_int)   * (num_threads + 1));
+                          << csrRowPtrCt << *csrColIndCt <<  *csrValCt << cl::Local((mergebuffer_size_local) * sizeof(int)) << cl::Local((mergebuffer_size_local) * sizeof(float)) << cl::Local(( num_threads+1) * sizeof(short)) << position << mergebuffer_size_local << cl::Local(sizeof(cl_int)   * (num_threads + 1)) << cl::Local(sizeof(cl_int)   * (num_threads + 1));
 
     
        status = kWrapper2.run(control, global, local);

@@ -68,7 +68,7 @@ clsparseInitScalar( clsparseScalar* scalar )
     pScalar->clear( );
 
     return clsparseSuccess;
-};
+}
 
 clsparseStatus
 clsparseInitVector( cldenseVector* vec )
@@ -77,7 +77,7 @@ clsparseInitVector( cldenseVector* vec )
     pVec->clear( );
 
     return clsparseSuccess;
-};
+}
 
 clsparseStatus
 clsparseInitCooMatrix( clsparseCooMatrix* cooMatx )
@@ -86,7 +86,7 @@ clsparseInitCooMatrix( clsparseCooMatrix* cooMatx )
     pCooMatx->clear( );
 
     return clsparseSuccess;
-};
+}
 
 clsparseStatus
 clsparseInitCsrMatrix( clsparseCsrMatrix* csrMatx )
@@ -95,7 +95,7 @@ clsparseInitCsrMatrix( clsparseCsrMatrix* csrMatx )
     pCsrMatx->clear( );
 
     return clsparseSuccess;
-};
+}
 
 clsparseStatus
 cldenseInitMatrix( cldenseMatrix* denseMatx )

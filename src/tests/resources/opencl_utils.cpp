@@ -85,15 +85,17 @@ cl::Device getDevice( cl_platform_type pID, cl_uint dID )
     cl_int pIndex = -1;
     for( const auto& p : platforms )
     {
-        //When using CL.1.1 the p.getInfo returns null terminated char* in
+        //When using NVIDIA the p.getInfo returns null terminated char* in
         // strange format "blabla\000" I don't know how to get rid of it :/
         std::string name;
-#if defined(CL_VERSION_1_2)
-        name = p.getInfo<CL_PLATFORM_NAME>( );
-#else
-        std::string pName = p.getInfo<CL_PLATFORM_NAME>( );
-        name = pName.substr( 0, pName.size( ) - 1 );
-#endif
+        if (pID == NVIDIA)
+        {
+            std::string pName = p.getInfo<CL_PLATFORM_NAME>( );
+            name = pName.substr( 0, pName.size( ) - 1 );
+        }
+        else
+            name = p.getInfo<CL_PLATFORM_NAME>( );
+
         pNames.insert( std::make_pair( name, ++pIndex ) );
     }
 
@@ -113,6 +115,7 @@ cl::Device getDevice( cl_platform_type pID, cl_uint dID )
     }
 
     auto pIterator = pNames.find( desired_platform_name );
+
     if( pIterator != pNames.end( ) )
     {
         std::cout << pIterator->first
@@ -121,6 +124,7 @@ cl::Device getDevice( cl_platform_type pID, cl_uint dID )
     }
     else
     {
+
         throw std::string( desired_platform_name + " was not found" );
     }
 

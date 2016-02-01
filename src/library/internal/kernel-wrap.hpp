@@ -120,7 +120,8 @@ private:
 
 //cl 1.1 //there is no getArgInfo in OpenCL 1.1
 //kind of leap of faith if on OpenCL everyting is ok with setting the args.
-#if (BUILD_CLVERSION == 110)
+//#if (BUILD_CLVERSION == 110)
+#if (BUILD_CLVERSION < 200) // JPA: Nvidia fix
 #define KERNEL_ARG_BASE_TYPE(TYPE, TYPE_STRING) \
         template<> inline KernelWrap& \
         KernelWrap::operator<< <TYPE>(const TYPE& arg) \

@@ -129,7 +129,7 @@ reduce_by_key( KeyVector& keys_output, ValueVector& values_output,
                  << offsetArray.data()
                  << size;
 
-        cl::NDRange global(size);
+        cl::NDRange global(size_input);
         cl::NDRange local (kernel_WgSize);
 
         cl_int status = kWrapper.run(control, global, local);
