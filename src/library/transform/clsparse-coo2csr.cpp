@@ -51,7 +51,8 @@ clsparseScoo2csr (const clsparseCooMatrix* coo,
     csr_col_indices = coo_col_indices;
     csr_values = coo_values;
 
-    clsparseStatus status = indices_to_offsets(csr_row_offsets, coo_row_indices, control);
+    //clsparseStatus status = indices_to_offsets(csr_row_offsets, coo_row_indices, control);
+    clsparseStatus status = h_indices_to_offsets(csr_row_offsets, coo_row_indices, control);
     CLSPARSE_V(status, "Error: coo2csr indices to offsets");
 
     return status;
@@ -91,7 +92,8 @@ clsparseDcoo2csr ( const clsparseCooMatrix* coo,
     csr_col_indices = coo_col_indices;
     csr_values = coo_values;
 
-    clsparseStatus status = indices_to_offsets(csr_row_offsets, coo_row_indices, control);
+    //clsparseStatus status = indices_to_offsets(csr_row_offsets, coo_row_indices, control);
+    clsparseStatus status = h_indices_to_offsets(csr_row_offsets, coo_row_indices, control);
     CLSPARSE_V(status, "Error: coo2csr indices to offsets");
 
     return status;

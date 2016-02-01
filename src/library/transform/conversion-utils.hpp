@@ -25,6 +25,35 @@
 #include "blas1/reduce.hpp"
 
 
+//JPA: Convert coo to csr on host
+template<typename T> // index type
+clsparseStatus
+h_indices_to_offsets(clsparse::vector<T>& offsets,
+                     const clsparse::vector<T>& indices,
+                     const clsparseControl control)
+{
+    typedef typename clsparse::vector<T> IndicesArray;
+    typedef typename clsparse::vector<T>::size_type SizeType;
+
+    offsets.fill(control, T(0));
+
+    for (SizeType i = 0; i < indices.size(); i++)
+    {
+        //offsets[indices[i] + 1] += 1;
+        offsets[indices[i] + 1] =  offsets[indices[i] + 1] + 1;
+    }
+
+    for (SizeType i = 1; i < offsets.size(); i++)
+    {
+
+        //offsets[i] += offsets[i - 1];
+        offsets[i] = offsets[i] + offsets[i - 1];
+    }
+
+    return clsparseSuccess;
+}
+
+
 template <typename T> //index type
 clsparseStatus
 indices_to_offsets(clsparse::vector<T>& offsets,

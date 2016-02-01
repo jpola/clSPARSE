@@ -89,10 +89,10 @@ public:
     {
         assert(argCounter < kernel.getInfo<CL_KERNEL_NUM_ARGS>());
         //there is no getArgInfo in OpenCL 1.1
-#if defined(CL_VERSION_1_2)
-        assert(kernel.getArgInfo<CL_KERNEL_ARG_ADDRESS_QUALIFIER>(argCounter)
-               == CL_KERNEL_ARG_ADDRESS_LOCAL);
-#endif
+//#if defined(CL_VERSION_1_2)
+//        assert(kernel.getArgInfo<CL_KERNEL_ARG_ADDRESS_QUALIFIER>(argCounter)
+//               == CL_KERNEL_ARG_ADDRESS_LOCAL);
+//#endif
 
         kernel.setArg(argCounter++, local);
         return *this;

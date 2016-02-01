@@ -265,7 +265,7 @@ void MatrixMarketReader<FloatType>::MMGenerateCOOFromFile( FILE *infile, cl_bool
 
     //silence warnings from fscanf (-Wunused-result)
     clsparseIdx_t rv = 0;
-
+    FloatType _val = 1;
     for ( clsparseIdx_t i = 0; i < nNZ; i++)
     {
         if( mm_is_real( Typecode ) )
@@ -305,7 +305,10 @@ void MatrixMarketReader<FloatType>::MMGenerateCOOFromFile( FILE *infile, cl_bool
             rv = fscanf(infile, "%" SIZET "u", &ir);
             rv = fscanf(infile, "%" SIZET "u", &ic);
 
-            val = static_cast<FloatType>( MAX_RAND_VAL * ( rand( ) / ( RAND_MAX + 1.0 ) ) );
+            // due to test structure we cant put different values here since
+            // matrix can be read twice
+            //val = static_cast<FloatType>( MAX_RAND_VAL * ( rand( ) / ( RAND_MAX + 1.0 ) ) );
+            val = _val++;
 
             if( exp_zeroes == 0 && val == 0 )
                 continue;

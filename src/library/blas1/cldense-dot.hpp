@@ -126,14 +126,16 @@ clsparseStatus dot(clsparseScalarPrivate* pR,
 
     if (size > 0)
     {
-        cl::Context context = control->getContext();
+        //not needed
+        //cl::Context context = control->getContext();
 
         //partial result
         cldenseVectorPrivate partial;
         clsparseInitVector(&partial);
         partial.num_values = REDUCE_BLOCKS_NUMBER;
 
-        clMemRAII<T> rPartial (control->queue(), &partial.values, partial.num_values);
+        //not needed
+        //clMemRAII<T> rPartial (control->queue(), &partial.values, partial.num_values);
 
         status = inner_product<T>(&partial, pX, pY, size,  REDUCE_BLOCKS_NUMBER,
                                REDUCE_BLOCK_SIZE, control);
